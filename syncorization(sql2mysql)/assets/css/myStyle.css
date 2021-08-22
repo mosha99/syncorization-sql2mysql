@@ -1,0 +1,223 @@
+* {
+  direction: rtl;
+  font-family: 'Vazir-Light';
+  padding: 0;
+}
+
+.navbar-brand {
+  /*font-size: 24px !important;*/
+}
+
+.nav-a {
+  display: block;
+  text-align: center;
+  margin: 0px 10px !important;
+  text-decoration: none !important;
+  /*margin-left: 10px;*/
+  display: flex;
+  justify-content: center;
+}
+
+i {
+  /*font-size: 26px;*/
+  /*font-size: initial !important;*/
+}
+
+.fa.fa-list-ul {
+  font-size: medium;
+}
+
+@media (max-width: 991px) {
+  .nav-a {
+    margin-top: 36px !important;
+  }
+}
+
+p {
+  font-size: xx-large;
+  font-family: 'vazir-bold';
+}
+
+.masthead.bg-primary.text-white.text-center {
+  height: 100%;
+}
+
+main {
+  background-color: #18bc9c!important;
+  /*height: 100%;*/
+}
+
+#page-top {
+  position: relative;
+}
+
+.footer-dark {
+  position: absolute;
+  /*bottom: 0px;*/
+  right: 0;
+  left: 0;
+}
+
+#mainNav {
+  position: sticky;
+}
+
+.footer-dark {
+  background-color: #2c3e50!important;
+  padding: 0;
+}
+
+.copyright {
+  background-color: #2c3e50!important;
+  color: #18bc9c!important;
+}
+
+main {
+  /*height: 100%;*/
+  text-align: center;
+  padding-top: 50px;
+  color: white;
+}
+
+.welcome {
+  margin-top: 50px;
+  font-size: 147px;
+}
+
+.icon.ion-android-exit {
+  font-size: 19px;
+  /*margin-bottom: 26px;*/
+  padding: 0;
+}
+
+#mainNav {
+  padding: 15px;
+}
+
+label {
+  font-size: 21px;
+  font-family: 'Vazir-Light';
+}
+
+.container-fluid {
+  height: 100% !important;
+}
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+}
+
+.footer-dark {
+  /*position: fixed;*/
+  bottom: 0;
+}
+
+#page-top {
+  background-color: #18bc9c!important;
+}
+
+.form-group {
+  text-align: center;
+  font-weight: 599;
+  color: white;
+}
+
+.btn {
+  margin-left: 10p;
+}
+
+.submit {
+  text-align: center;
+}
+
+.co {
+}
+
+.container.d-flex.justify-content-center.align-items-center.align-content-center.justify-content-xl-center.align-items-xl-center {
+}
+
+.div-c {
+  padding: 50px 0;
+  padding-bottom: 50px;
+}
+.table-dark {
+  background-color: rgb(44,62,80);
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  text-align: center;
+}
+
+.xs-none {
+}
+
+.xs-none {
+  /*display: none;*/
+}
+
+ss {
+  /*display: none;*/
+}
+
+@media (max-width: 575px) {
+  .dfg {
+    display: none;
+  }
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+}
+
+.pagination {
+  text-align: center;
+}
+
+.page-item {
+}
+
+@media (min-width: 992px) {
+    .mdq-767{
+        display:none;
+    }
+    
+  }
+@media (max-width: 992px) {
+    .dropdown { 
+        display:none;
+    }
+}
+@media (max-width: 500px) {
+    .footer-dark { 
+        display:none ;
+    }
+}
+@media (max-width: 468px) {
+    .pagination { 
+       justify-content: start !important;
+    }
+}
+@media (max-width: 600px) {
+    .scroll-to-top {
+        margin-bottom: 50px;
+    }
+}
+.scroll-to-top {
+    left: 1rem;
+    right: auto;
+}
+div#Paging {
+    overflow-x: auto;
+}
+@media only screen and (min-width: 992px) {
+    .mdq-767{
+        display:none;
+    }
+}
+@media only screen and (max-width: 992px) {
+    .dropdown { 
+        display:none;
+    }
+}

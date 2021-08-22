@@ -1,0 +1,71 @@
+﻿@model DataEditor.Models.seting
+@{
+    ViewBag.Title = "تنظیمات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section title{تنظیمات}
+@section seting{disabled}
+@section style{
+    <style>
+       .alert-dismissible #close {
+            position: absolute ;
+            top: 5px ;
+            right: 0 ;
+            padding: 0; 
+            color: inherit ;
+        }
+       
+        #mainNav{
+            z-index: 1 ;
+        }
+       #alert-danger,#alert-success {
+            position: fixed ;
+            top: 10px ;
+            z-index: 2 ;
+            right: 0 ;
+        }
+    </style>
+}
+@if (Model.error)
+{
+    <div class="alert alert-danger alert-dismissible" id="alert-danger">
+        <button type="button" class="close" id="close" data-dismiss="alert">&times;</button>
+        <strong>خطا</strong> ذخیره اطلاعات با موفقیت انجام نشد !
+    </div>
+}
+else if(ViewBag.succes!=null && ViewBag.succes)
+{
+    <div class="alert alert-success alert-dismissible" id="alert-success">
+        <button type="button" class="close" id="close" data-dismiss="alert">&times;</button>
+        <strong></strong> ذخیره اطلاعات با موفقیت انجام شد !
+    </div>
+}
+@if (ViewBag.testconection == "false")
+{
+    <div class="alert alert-danger alert-dismissible" id="alert-danger">
+        <button type="button" class="close" id="close" data-dismiss="alert">&times;</button>
+        <strong>خطا</strong> اتصال ناموفق بود !
+    </div>
+}
+else if (ViewBag.testconection == "true")
+{
+    <div class="alert alert-success alert-dismissible" id="alert-success">
+        <button type="button" class="close" id="close" data-dismiss="alert">&times;</button>
+        <strong></strong> اتصال با موفقیت برقرار شد !
+    </div>
+}
+
+<div class="container d-flex justify-content-center align-items-center align-content-center justify-content-xl-center align-items-xl-center div-c" style="/*height: 83%;*/">
+    <form action="@Url.Action("seting")" method="post" class="d-flex d-xl-flex flex-column justify-content-between col-12 col-md-8">
+        <div class="form-group d-block"><label>نام کاربری (sql)</label><input class="form-control SqlUsername" name="SqlUsername" type="text" required="" autocomplete="on" value="@Model.SqlUsername"></div>
+        <div class="form-group d-block"><label>گذرواژه (sql)<br></label><input class="form-control SqlPassword" name="SqlPassword" type="password" required="" autocomplete="off" value="@Model.SqlPassword"></div>
+        <div class="form-group d-block"><label>سال مالی</label><input class="form-control FiscalYear" type="number" name="FiscalYear" required="" value="@Model.FiscalYear"></div>
+        <div class="form-group d-block"><label>آدرس سرویس</label><input class="form-control urlServises" type="url" name="urlServises" required="" autocomplete="on" inputmode="url" value="@Model.urlServises"><small class="form-text text-muted">مثال: https:mysite.com/api</small></div>
+        <div class="submit">
+            <button class="btn btn-secondary" name="button" value="save"  type="submit"    >ذخیره</button>
+            <button class="btn btn-secondary conection" name="button" type="submit" value="test">تست</button>
+        </div>
+     </form>
+</div>
+
+    

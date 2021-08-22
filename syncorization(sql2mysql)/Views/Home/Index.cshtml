@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "خانه";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section title{خانه}
+@if (ViewBag.Authenticated == null|| ViewBag.Authenticated == false)
+{
+    @section exit{disabled}
+}
+<main class="vh-100">
+    
+    <h2>خانه</h2>
+</main>
+
+

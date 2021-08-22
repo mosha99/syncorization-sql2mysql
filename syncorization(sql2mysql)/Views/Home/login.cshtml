@@ -1,0 +1,24 @@
+﻿@model DataEditor.Models.login
+
+@{
+    ViewBag.Title = "ورود";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section title{ورود}
+@section style{
+    <style>
+        .footer-dark {
+    position: fixed !important;
+    bottom: 0;
+}
+    </style>
+    }
+
+<h2 style="text-align:center;">ورود</h2>
+<div class="container d-flex justify-content-center align-items-center align-content-center justify-content-xl-center align-items-xl-center div-c" style="/*height: 83%;*/">
+    <form action="@Url.Action("login")" method="post" class="d-flex d-xl-flex flex-column justify-content-between col-12 col-md-8">
+        @*@Html.AntiForgeryToken();*@
+        <div class="form-group text-center d-block"><label>گذرواژه</label><input class="form-control" type="password" name="password" required="" autocomplete="off" value="@Model.password"><input class="form-control d-none" type="password" name="url" required="" autocomplete="off" value="@Model.url"></div>
+        <div class="submit"><button class="btn btn-secondary" type="submit">ورود</button></div>
+    </form>
+</div>

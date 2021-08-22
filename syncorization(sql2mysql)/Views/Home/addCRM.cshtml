@@ -1,0 +1,110 @@
+﻿@model DataEditor.Models.crm
+
+@{
+    ViewBag.Title = "addCRM";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section style{
+    <style>
+        .col-md-10 {
+           margin:auto;
+        }
+        .container{
+            padding-top:0;
+        }
+        .btn{
+            color:#18bc9c;
+            background-color:#2c3e50;
+            font-family: 'vazir-bold';
+
+        }
+        label ,h2{
+            color: #2c3e50;
+            font-family: 'vazir-bold';
+        }
+        h2 {
+            margin-bottom: -6px;
+            margin-top: 35px;
+        }
+        .alert-dismissible #close {
+            position: absolute ;
+            top: 5px ;
+            right: 0 ;
+            padding: 0; 
+            color: inherit ;
+        }
+        #alert-danger, #alert-success {
+            position: fixed;
+            top: 10px;
+            z-index: 1042;
+            right: 0;
+        }
+        #mainNav {
+            z-index: 1;
+        }
+        .close{
+                 padding: 5px;
+         }
+
+    </style>
+}
+@if (ViewBag.error)
+{
+    <div class="alert alert-danger alert-dismissible" id="alert-danger">
+        <button type="button" class="close" id="close" data-dismiss="alert">&times;</button>
+        <strong>خطا</strong> ذخیره اطلاعات با موفقیت انجام نشد !
+    </div>
+}
+@if (ViewBag.succes)
+{
+    <div class="alert alert-success alert-dismissible" id="alert-success">
+        <button type="button" class="close" id="close" data-dismiss="alert">&times;</button>
+        <strong></strong> ذخیره اطلاعات با موفقیت انجام شد !
+    </div>
+}
+<h2>اضافه کردنcrm</h2>
+<div class="container d-flex justify-content-center align-items-center align-content-center justify-content-xl-center align-items-xl-center div-c" style="/*height: 83%;*/">
+
+    @using (Html.BeginForm("addCRM", "home",FormMethod.Post, new { @class = "d-flex d-xl-flex flex-column justify-content-between col-12 col-md-8" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label " })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Number, htmlAttributes: new { @class = "control-label " })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NationalCode, htmlAttributes: new { @class = "control-label " })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NationalCode, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NationalCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="ایجاد" class="btn btn-default" />
+                </div>
+            </div>
+
+
+    }
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
