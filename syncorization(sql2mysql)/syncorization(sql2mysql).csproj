@@ -6,6 +6,44 @@
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
 
+  <ItemGroup><!--<None Include="wwwroot\css\Footer-Dark.css" />
+    <None Include="wwwroot\css\jquery-ui.min.css" />
+    <None Include="wwwroot\css\myStyle.css" />
+    <None Include="wwwroot\css\vazir-black.css" />
+    <None Include="wwwroot\css\vazir-bold.css" />
+    <None Include="wwwroot\css\Vazir-Light.css" />
+    <None Include="wwwroot\css\Vazir-Medium.css" />
+    <None Include="wwwroot\fonts\font-awesome.min.css" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.eot" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.ttf" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.woff" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\fonts\FontAwesome.otf" />
+    <None Include="wwwroot\fonts\ionicons.eot" />
+    <None Include="wwwroot\fonts\ionicons.min.css" />
+    <None Include="wwwroot\fonts\ionicons.svg" />
+    <None Include="wwwroot\fonts\ionicons.ttf" />
+    <None Include="wwwroot\fonts\ionicons.woff" />
+    <None Include="wwwroot\fonts\Simple-Line-Icons.eot" />
+    <None Include="wwwroot\fonts\simple-line-icons.min.css" />
+    <None Include="wwwroot\fonts\Simple-Line-Icons.svg" />
+    <None Include="wwwroot\fonts\Simple-Line-Icons.ttf" />
+    <None Include="wwwroot\fonts\Simple-Line-Icons.woff" />
+    <None Include="wwwroot\fonts\Simple-Line-Icons.woff2" />
+    <None Include="wwwroot\css\vazir-black.ttf" />
+    <None Include="wwwroot\css\vazir-bold.ttf" />
+    <None Include="wwwroot\css\Vazir-Light.ttf" />
+    <None Include="wwwroot\css\Vazir-Medium.ttf" />
+    <None Include="wwwroot\js\freelancer.js" />
+    <None Include="wwwroot\js\jquery-ui.min.js" />
+    <None Include="wwwroot\js\jquery.min.js" />
+    <None Include="wwwroot\lib\bootstrap.min.css" />
+    <None Include="wwwroot\lib\bootstrap.min.js" />-->
+  
+    <Folder Include="datacrm\" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />

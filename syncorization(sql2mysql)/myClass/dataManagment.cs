@@ -4,13 +4,26 @@ using datamaster;
 
 namespace DataEditor.myClass
 {
-    public static class dataManagment
+    public interface IdataManagment
     {
-       static MasterSET2008Context db = new MasterSET2008Context();
-        public static IQueryable<VwProduct> getall()
+        public IQueryable<VwProduct> getall();
+        public  void test();
+
+    }
+
+    public class dataManagment:IdataManagment
+    {
+         MasterSET2008Context db = new MasterSET2008Context();
+        public  IQueryable<VwProduct> getall()
         {
-            IQueryable<VwProduct> list = db.VwProducts;
+            IQueryable<VwProduct> list;
+            var x = db.VwProducts.Count();
+            list = db.VwProducts;
+
             return list;
         }
+
+        public  void test() => db.SaveChanges();
+
     }
 }

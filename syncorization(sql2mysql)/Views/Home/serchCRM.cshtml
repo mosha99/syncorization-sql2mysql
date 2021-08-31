@@ -1,0 +1,259 @@
+﻿@using DataEditor.Models;
+@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<crm>
+
+@{ ViewBag.Title = "serchCRM";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+@section style{
+    <style>
+        .page-link {
+            position: relative;
+            display: block;
+            padding: .5rem .75rem;
+            margin-left: -1px;
+            line-height: 1.25;
+            color: #18bc9c;
+            background-color: #2c3e50;
+            border: 1px solid #2c3e50;
+        }
+
+        .page-item.disabled .page-link {
+            color: #868e96;
+            pointer-events: none;
+            cursor: auto;
+            background-color: #2c3e50;
+            border-color: #2c3e50;
+        }
+
+        .page-item.active .page-link {
+            z-index: 0;
+            color: #fff;
+            background-color: #439484;
+            border-color: #439484;
+        }
+
+        .page-item:last-child .page-link {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: .25rem;
+            border-bottom-left-radius: .25rem;
+        }
+
+        .page-item:first-child .page-link {
+            margin-left: 0;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: .25rem;
+            border-bottom-right-radius: .25rem;
+        }
+
+        .pagination {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            width: auto;
+        }
+
+        #filter {
+            position: relative;
+            cursor: pointer;
+        }
+
+        #Dfilter {
+            position: fixed;
+            /*bottom: -60px;*/
+            direction: rtl;
+            background-color: rgb(44,62,80);
+            padding: 10px;
+        }
+
+        .ff {
+            margin: 0 8px;
+        }
+
+        #dcf {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            background-color: #000000c7;
+            justify-content: center;
+            align-items: center;
+            z-index: 6;
+        }
+
+        #selectf {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 7;
+        }
+
+        #Dfilter {
+            position: relative;
+            z-index: 8;
+        }
+
+        #mainNav {
+            z-index: 5;
+        }
+
+        .btn-success.focus, .btn-success:focus, .btn-success:hover {
+            color: #fff;
+            background-color: #2c3e50c9;
+            border-color: #2c3e5000;
+        }
+
+        .btn-success {
+            color: #fff;
+            background-color: #2c3e50;
+            border-color: #2c3e50;
+        }
+
+            .btn-success:not(:disabled):not(.disabled).active, .btn-success:not(:disabled):not(.disabled):active, .show > .btn-success.dropdown-toggle {
+                color: #fff;
+                background-color: #2c3e50;
+                border-color: #2c3e50;
+            }
+
+                .btn-success:not(:disabled):not(.disabled).active:focus, .btn-success:not(:disabled):not(.disabled):active:focus, .show > .btn-success.dropdown-toggle:focus {
+                    box-shadow: 0 0 0 0.2rem rgb(62 158 84 / 0%);
+                }
+
+        form {
+            display: flex;
+            width: 100%;
+        }
+
+        .alert-dismissible #close {
+            position: absolute;
+            top: 5px;
+            right: 0;
+            padding: 0;
+            color: inherit;
+        }
+
+        #alert-danger, #alert-success {
+            position: fixed;
+            top: 10px;
+            z-index: 1042;
+            right: 0;
+        }
+
+        #mainNav {
+            z-index: 1;
+        }
+
+        .input-group-append .btn, .input-group-prepend .btn {
+            position: relative;
+            z-index: 0;
+        }
+
+        .footer-dark {
+            display: none;
+        }
+    </style>
+}
+@if (ViewBag.error)
+{
+<div class="alert alert-danger alert-dismissible" id="alert-danger">
+    <button type="button" class="close" id="close" data-dismiss="alert">&times;</button>
+    <strong>خطا</strong> عملیات با موفقیت انجام نشد !
+</div>}
+@if (ViewBag.succes)
+{
+<div class="alert alert-success alert-dismissible" id="alert-success">
+    <button type="button" class="close" id="close" data-dismiss="alert">&times;</button>
+    <strong></strong> عملیات با موفقیت انجام شد !
+</div>}
+<div class="container-lg d-flex justify-content-center  align-items-center align-content-center justify-content-xl-center align-items-xl-center div-c" style="flex-direction:column;">
+
+    <div class="input-group mb-3 col-12 " style="direction :ltr;">
+        @using (Html.BeginForm("serchCRM", "home", FormMethod.Post))
+        {
+            if (ViewBag.serch != null)
+            {
+<input id="serchbox" type="text" class="form-control" page="@ViewBag.page" name="serch" value="@ViewBag.serch" placeholder="Search" style="height :auto; "> }
+else
+{
+<input id="serchbox" type="text" class="form-control" page="@ViewBag.page" name="serch" placeholder="Search" style="height :auto; "> }
+<div class="input-group-append">
+    <button class="btn btn-success" type="submit">جستوجو</button>
+</div>}
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-dark">
+            <thead>
+                <tr>
+                    <th>عملیات</th>
+                    <th>کد ملی</th>
+                    <th>شماره</th>
+                    <th>نام</th>
+                    <th>شناسه</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+    <tr>
+        <td><button class="btn btn-danger remove" id="@item.Id">حذف</button></td>
+        <td>@item.NationalCode</td>
+        <td>@item.Number</td>
+        <td>@item.Name</td>
+        <td>@item.Id</td>
+    </tr>}
+
+
+            </tbody>
+
+        </table>
+        <div id='Paging' style="text-align: center">
+
+            @{ string query = "";
+                if (ViewBag.serch != null) query = $"serch={ViewBag.serch}";
+                ViewData["QS"] = query;
+                }
+            @await Html.PartialAsync("pagination", Model)
+
+            @*@Html.PagedListPager(Model.list, page => Url.Action("serchCrm", new { page, ViewBag.store1, ViewBag.example, serch = ViewBag.serch }))*@
+        </div>
+    </div>
+</div>
+@section footer{style="position:fixed;}
+@section scripts{
+    <script src="~/assets/js/jquery-ui.min.js"></script>
+    <script>
+        //alert("top:" + $("#filter").outerHeight() + ";")
+        $(".pagination").children("li").addClass("page-item");
+        $(".pagination").children("li").children("a").addClass("page-link");
+        $("#dcf").hide();
+
+        $(".remove").click(function () {
+            var This = this;
+            var url = "@Url.Action("deletCrm")" + "?page=" + $("#serchbox").attr("page") + "&" + "id=" + $(This).attr("id") + "&" + "serch=" + "@ViewBag.serch";
+            //alert(url);
+            window.location.replace(url);
+        });
+        //var lastScrollTop = 0;
+        //$(window).scroll(function (event) {
+        //    var st = $(this).scrollTop();
+
+        //    if (st > lastScrollTop) {
+        //        $(".footer-dark").hide()
+        //        $(".navbar").hide()
+        //    } else {
+        //        $(".footer-dark").show()
+        //        $(".navbar").show()                // upscroll code
+        //    }
+        //    lastScrollTop = st;
+        //});
+
+    </script>
+
+}
+

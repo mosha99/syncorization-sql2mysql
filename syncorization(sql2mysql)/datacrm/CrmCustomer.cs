@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -14,6 +15,7 @@ namespace data
         }
 
         public int ShsId { get; set; }
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Sho { get; set; }
@@ -55,6 +57,7 @@ namespace data
         public string TarEdit { get; set; }
         public string TarKasianD { get; set; }
         public string TarKasianT { get; set; }
+        public bool? IsDeleted { get; set; }
 
         public virtual SalMaly Shs { get; set; }
         public virtual ICollection<CrmLog> CrmLogs { get; set; }

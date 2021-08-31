@@ -7,14 +7,14 @@ namespace datamaster
 {
     public partial class VwProduct
     {
-        public int کدسال { get; set; }
-        public double کدکالا { get; set; }
-        public string کالا { get; set; }
-        public double? کدانبار { get; set; }
-        public string انبار { get; set; }
-        public double? فیخرید { get; set; }
-        public double? فیفروش { get; set; }
-        public string واحد { get; set; }
-        public double? موجودیانبار { get; set; }
+        public int Year { get; set; }
+        public double Id { get; set; }
+        public string Name { get; set; }
+        public double? StroeId { get; set; }
+        public string StoreName { get; set; }
+        public double? BuyPrice { get; set; }
+        public double? SalePrice { get; set; }
+        public string Unit { get; set; }
+        public double? Inventory { get; set; }
     }
 }

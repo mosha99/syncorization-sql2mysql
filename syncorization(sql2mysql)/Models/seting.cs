@@ -7,6 +7,8 @@ namespace DataEditor.Models
 {
     public class seting:Iseting
     {
+        public string DbName { set; get; }
+        public string DbSuorse { set; get; }
         public string SqlUsername { set; get; }
         public string SqlPassword { set; get; }
         public int FiscalYear { set; get; }

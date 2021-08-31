@@ -1,0 +1,49 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList
+@{ 
+    string QueryString = ViewData["QS"]?.ToString();
+}
+<nav>
+    <ul class="pagination">
+        @{
+            int pagecoutn = Model.PageCount, P = Model.PageNumber - 1, N = Model.PageNumber + 1, n = Model.PageNumber + 1, p = Model.PageNumber - 1;
+            int Pc = 0, Nc = 0;
+            string url = ViewData["url"]?.ToString();
+
+            if (Model.PageNumber != 1)
+            {
+                <li class="page-item"><a class="page-link" href="@url?page=1&@QueryString" aria-label="Previous" d><span aria-hidden="true">اولین</span></a></li>
+                <li class="page-item"><a class="page-link" href="@url?page=@P&@QueryString" aria-label="Previous" d><span aria-hidden="true">قبلی</span></a></li>
+            }
+
+            /*while (true)*/
+            int g = Model.PageNumber;
+            if (g < 4)
+                g = 1;
+            else
+                g = Model.PageNumber - 3;
+
+            for (int i = g; i <= Model.PageNumber - 1; i++)
+            {
+                <li class="page-item"><a class="page-link" href="@url?page=@i&@QueryString">@i</a></li>
+
+                Pc++;
+            }
+            <li class="page-item"><a style="background: #6f6f6f;" class="page-link" href="@url?page=@Model.PageNumber&@QueryString">@Model.PageNumber</a></li>
+            while (true)
+            {
+                if (N == pagecoutn + 1 || (Nc + Pc) > 5) break;
+                <li class="page-item"><a class="page-link" href="@url?page=@N&@QueryString">@N</a></li>
+                N++;
+                Nc++;
+            }
+
+            if (Model.PageNumber != pagecoutn)
+            {
+                <li class="page-item"><a class="page-link" href="@url?page=@n&@QueryString" aria-label="Next"><span aria-hidden="true">بعدی</span></a></li>
+                <li class="page-item"><a class="page-link" href="@url?page=@Model.PageCount&@QueryString" aria-label="Next"><span aria-hidden="true">آخرین</span></a></li>
+            }
+        }
+    </ul>
+</nav>

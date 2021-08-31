@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "Data Source=.;Initial Catalog=MasterSET2008;Persist Security Info=True;User ID=sa;Password=moein1381;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir datamaster -Table wv_SaleList,wv_Sale,vw_Store,vw_Product,vw_Customer,vw_Company,vw_BuyList,vw_Buy

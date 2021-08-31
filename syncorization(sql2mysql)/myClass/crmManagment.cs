@@ -1,106 +1,113 @@
-﻿//using DataEditor.Controllers;
-using DataEditor.ErrorLog;
+﻿using DataEditor.ErrorLog;
 using DataEditor.Models;
-//using DataEditor.data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using data;
 
 namespace DataEditor.myClass
 {
-    public static class crmManagment
+    public interface IcrmManagment
     {
-        
-        //static CRM2008Entities dbcrm = new CRM2008Entities();
-        public static List<crm> get()
+        public  List<crm> get();
+        public  List<crm> get(string serch);
+        public  bool add(crm Crm);
+        public  bool delete(int id);
+    }
+    public class crmManagment:IcrmManagment
+    {
+
+        static CRM2008Context dbcrm = new CRM2008Context();
+        public  List<crm> get()
         {
             List<crm> Lcrm = new List<crm>();
             try
             {
-            //    foreach (var item in dbcrm.CRM_Customer)
-            //    {
+                foreach (var item in dbcrm.CrmCustomers)
+                {
+                    if (item.IsDeleted != true)
+                        Lcrm.Add(new crm
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            Number = item.Mobil,
+                            NationalCode = item.CodeMelli,
+                        });
 
-            //        Lcrm.Add(new crm
-            //        {
-            //            Id = item.id,
-            //            Name = item.NAME,
-            //            Number = item.MOBIL,
-            //            NationalCode = item.CodeMelli,
-            //        });
-
-            //    }
+                }
             }
             catch
             {
-                //foreach (var item in dbcrm.CRM_Customer)
-                //{
+                foreach (var item in dbcrm.CrmCustomers)
+                {
+                    if (item.IsDeleted != true)
+                        Lcrm.Add(new crm
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            Number = item.Mobil,
+                            NationalCode = item.CodeMelli,
+                        });
 
-                //    Lcrm.Add(new crm
-                //    {
-                //        Id = item.id,
-                //        Name = item.NAME,
-                //        Number = item.MOBIL,
-                //        NationalCode = item.CodeMelli,
-                //    });
-
-                //}
+                }
             }
-            
+
             return Lcrm;
         }
-        public static List<crm> get(string serch)
+        public  List<crm> get(string serch)
         {
-          List<crm> Lcrm = new List<crm>();
-          Lcrm = get();
-          Lcrm = Lcrm.Where(x => x.Name.Contains(serch) ||x.NationalCode.ToString().Contains(serch)|| x.Number.ToString().Contains(serch)).ToList();
-          return Lcrm;
+            List<crm> Lcrm = new List<crm>();
+            Lcrm = get();
+            Lcrm = Lcrm.Where(x => x.Name.Contains(serch) || x.NationalCode.ToString().Contains(serch) || x.Number.ToString().Contains(serch)).ToList();
+            return Lcrm;
         }
-        public static bool add(crm Crm,string path)
+        public  bool add(crm Crm)
         {
-            //int id = 0;
             try
             {
-                //var db=dbcrm.CRM_Customer.OrderBy(x => x.id).ToList();
-                //var ob = new CRM_Customer();
-                //ob.id = db.Last().id + 1;
-                //id = ob.id;
-                //ob.NAME = Crm.Name;
-                //ob.MOBIL = Crm.Number;
-                //ob.CodeMelli = Crm.NationalCode;
-                //ob.SHS_ID = 32906515;
-                //ob.cod_Eshterak = ob.id.ToString();
-                //ob.CartKind = "اشتراک";
-                //ob.Mos_id = 0;
-                //ob.Lottery = false;
-                //    //SalMaly=dbcrm.SalMalies.FirstOrDefault(y=>y.SHS_ID==0)
-                
-                //dbcrm.CRM_Customer.Add(ob);
-                //dbcrm.SaveChanges();
+                var z = dbcrm.CrmCustomers.Where(x => x.Name == Crm.Name || x.Mobil == Crm.Number || x.CodeMelli == Crm.NationalCode);
+                if (z.Count() != 0) return false;
+                var newc = new CrmCustomer
+                {
+                    MosId = 2,
+                    Name = Crm.Name,
+                    CodeMelli = Crm.NationalCode,
+                    ShsId = 0,
+                    CodEshterak=Crm.NationalCode+"5555",
+                    CartKind = "اشتراک",
+                    Lottery = false
+
+                };
+                dbcrm.CrmCustomers.Add(newc);
+                dbcrm.SaveChanges();
                 return true;
             }
 
-                catch (Exception error)
+            catch (Exception error)
             {
-                //dbcrm.CRM_Customer.Remove(dbcrm.CRM_Customer.FirstOrDefault(x=>x.id==id));
-                errors.LogError(error, path);
+                errors.LogError(error);
+
                 return false;
             }
         }
-        public static bool delete(int id, string path)
+        public  bool delete(int id)
         {
+
             try
             {
-                //dbcrm.CRM_Customer.Remove(dbcrm.CRM_Customer.FirstOrDefault(x => x.id == id));
-                //dbcrm.SaveChanges();
+                var x = dbcrm.CrmCustomers.FirstOrDefault(x => x.Id == id);
+                x.IsDeleted = true;
+                dbcrm.SaveChanges();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                errors.LogError(ex, path);
+
+                errors.LogError(ex);
                 return false;
             }
-            
+
         }
     }
 }

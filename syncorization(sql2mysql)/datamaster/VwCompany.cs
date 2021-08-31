@@ -7,8 +7,8 @@ namespace datamaster
 {
     public partial class VwCompany
     {
-        public string شرکت { get; set; }
-        public int سال { get; set; }
-        public int کدسال { get; set; }
+        public string Company { get; set; }
+        public int YearName { get; set; }
+        public int Year { get; set; }
     }
 }

@@ -7,13 +7,13 @@ namespace datamaster
 {
     public partial class VwCustomer
     {
-        public int کدسال { get; set; }
-        public double کدمشتری { get; set; }
-        public string نام { get; set; }
-        public double? کددفتر { get; set; }
-        public double? کدحساب { get; set; }
-        public string آدرس { get; set; }
-        public string تلفن { get; set; }
-        public string همراه { get; set; }
+        public int Year { get; set; }
+        public double Id { get; set; }
+        public string Name { get; set; }
+        public double? BookId { get; set; }
+        public double? AccountId { get; set; }
+        public string Adress { get; set; }
+        public string Tel { get; set; }
+        public string Mobil { get; set; }
     }
 }

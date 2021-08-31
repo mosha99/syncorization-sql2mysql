@@ -10,8 +10,9 @@ namespace DataEditor.ErrorLog
 {
     static public class errors
     {
-        public static void LogError(Exception ex,string path)
+        public static void LogError(Exception ex)
         {
+            string path="ErrorLog.txt";
             string message = string.Format("Time: {0}", DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt"));
             message += Environment.NewLine;
             message += "-----------------------------------------------------------";

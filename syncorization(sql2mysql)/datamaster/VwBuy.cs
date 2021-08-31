@@ -7,24 +7,24 @@ namespace datamaster
 {
     public partial class VwBuy
     {
-        public int کدسال { get; set; }
-        public double کدخرید { get; set; }
-        public string تاریخخرید { get; set; }
-        public double? جمعکل { get; set; }
-        public double? تخفیف { get; set; }
-        public double? تخفیف2 { get; set; }
-        public double? ارزشافزوده { get; set; }
-        public double? قابلپرداخت { get; set; }
-        public double? نقد { get; set; }
-        public double? چک { get; set; }
-        public double? واریزی { get; set; }
-        public double? مانده { get; set; }
-        public double? کددفتر { get; set; }
-        public double? کدحساب { get; set; }
-        public string سازنده { get; set; }
-        public string ویرایشگر { get; set; }
-        public string تاریخایجاد { get; set; }
-        public double? وزن { get; set; }
-        public double? مساحت { get; set; }
+        public int Year { get; set; }
+        public double Id { get; set; }
+        public string BuyDate { get; set; }
+        public double? Total { get; set; }
+        public double? Discount { get; set; }
+        public double? Discount2 { get; set; }
+        public double? Vat { get; set; }
+        public double? Payment { get; set; }
+        public double? Cash { get; set; }
+        public double? Cheque { get; set; }
+        public double? Deposit { get; set; }
+        public double? Remaining { get; set; }
+        public double? BookId { get; set; }
+        public double? AccountId { get; set; }
+        public string Creator { get; set; }
+        public string Editor { get; set; }
+        public string CrateDate { get; set; }
+        public double? Weight { get; set; }
+        public double? Area { get; set; }
     }
 }
