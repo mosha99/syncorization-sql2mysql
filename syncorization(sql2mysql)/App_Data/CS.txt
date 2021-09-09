@@ -1,0 +1,1 @@
+Data Source=.;Persist Security Info=True;Initial Catalog=CRM2008;User ID=sa;Password=moein1381;

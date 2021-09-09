@@ -110,12 +110,14 @@ namespace Controllers
             {
                 try
                 {
+                    bool succesM = testconection_Master(myseting);
 
-                    bool succes = testconection(myseting);
+                    bool succesC = testconection_Crm(myseting);
 
-                    ViewBag.testconection = succes.ToString();
+                    ViewBag.testconectionM = succesM.ToString();
 
-                    ViewBag.testconection = succes.ToString();
+                    ViewBag.testconectionC = succesC.ToString();
+
                     return View(myseting);
                 }
                 catch (Exception ex)
@@ -174,7 +176,7 @@ namespace Controllers
             return View(pList);
         }
 
-        public bool testconection(seting myseting)
+        public bool testconection_Master(seting myseting)
         {
             seting myseting2 = new seting();
             string path3 = "App_Data/seting.txt";
@@ -213,6 +215,68 @@ namespace Controllers
                 }
 
                 master2008.getall();
+
+                using (StreamWriter JsonText = new StreamWriter(path3, false))
+                {
+                    string json = JsonConvert.SerializeObject(myseting2);
+                    JsonText.Write(json);
+                    JsonText.Close();
+                }
+                return true;
+
+            }
+            catch (Exception)
+            {
+                using (StreamWriter JsonText = new StreamWriter(path3, false))
+                {
+                    string json = JsonConvert.SerializeObject(myseting2);
+                    JsonText.Write(json);
+                    JsonText.Close();
+                }
+                return false;
+            }
+
+        }
+
+        public bool testconection_Crm(seting myseting)
+        {
+            seting myseting2 = new seting();
+            string path3 = "App_Data/seting.txt";
+            try
+            {
+
+                try
+                {
+
+                    using (StreamReader JsonText = new StreamReader(path3, true))
+                    {
+                        string Jsonstring = JsonText.ReadToEnd();
+                        var serverSettings = JsonConvert.DeserializeObject<seting>(Jsonstring);
+                        if (serverSettings != null)
+                        {
+                            myseting2 = serverSettings;
+
+                        }
+                        JsonText.Close();
+                        //var x5 = JsonSerializer.Deserialize<seting>(x4);
+
+                    }
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+
+
+                using (StreamWriter JsonText = new StreamWriter(path3, false))
+                {
+                    string json = JsonConvert.SerializeObject(myseting);
+                    JsonText.Write(json);
+                    JsonText.Close();
+                }
+
+                Crm2008.get();
 
                 using (StreamWriter JsonText = new StreamWriter(path3, false))
                 {

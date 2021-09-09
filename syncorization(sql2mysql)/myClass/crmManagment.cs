@@ -18,12 +18,13 @@ namespace DataEditor.myClass
     public class crmManagment:IcrmManagment
     {
 
-        static CRM2008Context dbcrm = new CRM2008Context();
+        
         public  List<crm> get()
         {
             List<crm> Lcrm = new List<crm>();
             try
             {
+                CRM2008Context dbcrm = new CRM2008Context();
                 foreach (var item in dbcrm.CrmCustomers)
                 {
                     if (item.IsDeleted != true)
@@ -37,20 +38,9 @@ namespace DataEditor.myClass
 
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                foreach (var item in dbcrm.CrmCustomers)
-                {
-                    if (item.IsDeleted != true)
-                        Lcrm.Add(new crm
-                        {
-                            Id = item.Id,
-                            Name = item.Name,
-                            Number = item.Mobil,
-                            NationalCode = item.CodeMelli,
-                        });
-
-                }
+                throw ;
             }
 
             return Lcrm;
@@ -66,6 +56,7 @@ namespace DataEditor.myClass
         {
             try
             {
+                CRM2008Context dbcrm = new CRM2008Context();
                 var z = dbcrm.CrmCustomers.Where(x => x.Name == Crm.Name || x.Mobil == Crm.Number || x.CodeMelli == Crm.NationalCode);
                 if (z.Count() != 0) return false;
                 var newc = new CrmCustomer
@@ -96,6 +87,7 @@ namespace DataEditor.myClass
 
             try
             {
+                CRM2008Context dbcrm = new CRM2008Context();
                 var x = dbcrm.CrmCustomers.FirstOrDefault(x => x.Id == id);
                 x.IsDeleted = true;
                 dbcrm.SaveChanges();

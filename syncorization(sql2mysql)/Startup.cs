@@ -21,8 +21,8 @@ namespace syncorization_sql2mysql_
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddTransient<IdataManagment,dataManagment>();
-            services.AddTransient<IcrmManagment, crmManagment>();
+            services.AddScoped<IdataManagment,dataManagment>();
+            services.AddScoped<IcrmManagment, crmManagment>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

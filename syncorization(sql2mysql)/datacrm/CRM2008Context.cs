@@ -1,6 +1,10 @@
 ﻿using System;
+using System.IO;
+using DataEditor.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Newtonsoft.Json;
+using DataEditor.myClass;
 
 #nullable disable
 
@@ -33,8 +37,31 @@ namespace data
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=CRM2008;Persist Security Info=True;User ID=sa;Password=moein1381;Trusted_Connection=True;");
+                /*seting myseting = new seting();
+                string path3 = "App_Data/seting.txt";
+                using (StreamReader JsonText = new StreamReader(path3, true))
+                {
+
+                    string Jsonstring = JsonText.ReadToEnd();
+                    var serverSettings = JsonConvert.DeserializeObject<seting>(Jsonstring,
+                    new JsonSerializerSettings());
+                    if (serverSettings != null)
+                    {
+                        myseting = serverSettings;
+                    }
+                    JsonText.Close();
+
+                }
+
+                string cs = $"Data Source={myseting.DbSuorse};Persist Security Info=True;Initial Catalog={myseting.DbName1};User ID={myseting.SqlUsername };Password={myseting.SqlPassword};";
+                Console.WriteLine(cs);
+
+                optionsBuilder.UseSqlServer(cs);*/
+
+                TextEditor text = new TextEditor("App_Data/CS.txt");
+                string cs = text.Reader();
+                Console.WriteLine(cs);
+                optionsBuilder.UseSqlServer(cs);
             }
         }
 
