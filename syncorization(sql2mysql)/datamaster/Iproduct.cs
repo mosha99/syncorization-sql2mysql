@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-
-#nullable disable
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace datamaster
 {
-    public partial class VwProduct: Iproduct
+    public class Iproduct
     {
         public int Year { get; set; }
         public double Id { get; set; }

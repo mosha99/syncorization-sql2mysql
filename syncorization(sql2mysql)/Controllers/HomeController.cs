@@ -138,6 +138,7 @@ namespace Controllers
 
 
             var list = master2008.getall();
+
             List<filtercs> storlist = new List<filtercs>();
 
             foreach (var item in list)
@@ -156,6 +157,7 @@ namespace Controllers
                 }
 
             }
+
             if (store1 != null || example != null)
             {
                 string store = store1;
@@ -171,7 +173,12 @@ namespace Controllers
 
             List<commodity> vlist = new List<commodity>();
 
-            IPagedList<VwProduct> pList = list.ToPagedList(page ?? 1, 9);
+            IList<VwProduct> Ls = new List<VwProduct>();
+            Ls = list.ToList();
+            IPagedList<VwProduct> pList = Ls.ToPagedList(page ?? 1, 9);
+
+
+            //IPagedList<VwProduct> pList = list.ToPagedList(page ?? 1, 9);
             ViewBag.store = storlist;
             return View(pList);
         }
