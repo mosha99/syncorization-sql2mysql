@@ -56,8 +56,16 @@ namespace datamaster
 
                 //TextEditor text = new TextEditor("App_Data/MS.txt");
                 //string cs = text.Reader();
+
+
+
+
                 Console.WriteLine(cs);
-                optionsBuilder.UseSqlServer(cs);
+                optionsBuilder.UseSqlServer(cs); 
+
+                Console.WriteLine("StartLog ********************************************************************");
+                optionsBuilder.LogTo(Console.WriteLine);
+                Console.WriteLine("EndLog ********************************************************************");
             }
         }
 

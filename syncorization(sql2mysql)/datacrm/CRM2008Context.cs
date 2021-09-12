@@ -58,10 +58,15 @@ namespace data
 
                 optionsBuilder.UseSqlServer(cs);
 
+
+
                 //TextEditor text = new TextEditor("App_Data/CS.txt");
                 //string cs = text.Reader();
                 Console.WriteLine(cs);
-                optionsBuilder.UseSqlServer(cs);
+                optionsBuilder.UseSqlServer(cs); 
+                Console.WriteLine("StartLog ********************************************************************");
+                optionsBuilder.LogTo(Console.WriteLine);
+                Console.WriteLine("EndLog ********************************************************************");
             }
         }
 
