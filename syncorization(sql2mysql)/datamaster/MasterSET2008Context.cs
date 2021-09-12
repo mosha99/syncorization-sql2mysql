@@ -34,28 +34,28 @@ namespace datamaster
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //seting myseting = new seting();
-                //string path3 = "App_Data/seting.txt";
-                //using (StreamReader JsonText = new StreamReader(path3, true))
-                //{
+                seting myseting = new seting();
+                string path3 = "App_Data/seting.txt";
+                using (StreamReader JsonText = new StreamReader(path3, true))
+                {
 
-                //    string Jsonstring = JsonText.ReadToEnd();
-                //    var serverSettings = JsonConvert.DeserializeObject<seting>(Jsonstring,
-                //    new JsonSerializerSettings());
-                //    if (serverSettings != null)
-                //    {
-                //        myseting = serverSettings;
-                //    }
-                //    JsonText.Close();
+                    string Jsonstring = JsonText.ReadToEnd();
+                    var serverSettings = JsonConvert.DeserializeObject<seting>(Jsonstring,
+                    new JsonSerializerSettings());
+                    if (serverSettings != null)
+                    {
+                        myseting = serverSettings;
+                    }
+                    JsonText.Close();
 
-                //}
-                //string cs = $"Data Source={myseting.DbSuorse};Persist Security Info=True;Initial Catalog={myseting.DbName};User ID={myseting.SqlUsername };Password={myseting.SqlPassword};";
-                //Console.WriteLine(cs);
+                }
+                string cs = $"Data Source={myseting.DbSuorse};Persist Security Info=True;Initial Catalog={myseting.DbName};User ID={myseting.SqlUsername };Password={myseting.SqlPassword};";
+                Console.WriteLine(cs);
 
-                //optionsBuilder.UseSqlServer(cs);
+                optionsBuilder.UseSqlServer(cs);
 
-                TextEditor text = new TextEditor("App_Data/MS.txt");
-                string cs = text.Reader();
+                //TextEditor text = new TextEditor("App_Data/MS.txt");
+                //string cs = text.Reader();
                 Console.WriteLine(cs);
                 optionsBuilder.UseSqlServer(cs);
             }

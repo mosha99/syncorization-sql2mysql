@@ -37,7 +37,7 @@ namespace data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                /*seting myseting = new seting();
+                seting myseting = new seting();
                 string path3 = "App_Data/seting.txt";
                 using (StreamReader JsonText = new StreamReader(path3, true))
                 {
@@ -56,10 +56,10 @@ namespace data
                 string cs = $"Data Source={myseting.DbSuorse};Persist Security Info=True;Initial Catalog={myseting.DbName1};User ID={myseting.SqlUsername };Password={myseting.SqlPassword};";
                 Console.WriteLine(cs);
 
-                optionsBuilder.UseSqlServer(cs);*/
+                optionsBuilder.UseSqlServer(cs);
 
-                TextEditor text = new TextEditor("App_Data/CS.txt");
-                string cs = text.Reader();
+                //TextEditor text = new TextEditor("App_Data/CS.txt");
+                //string cs = text.Reader();
                 Console.WriteLine(cs);
                 optionsBuilder.UseSqlServer(cs);
             }
