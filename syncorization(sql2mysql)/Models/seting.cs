@@ -14,6 +14,8 @@ namespace DataEditor.Models
         public string SqlPassword { set; get; }
         public int FiscalYear { set; get; }
         public string urlServises { set; get; }
+        public string firstPass { set; get; }
+        public string secendPass { set; get; }
         public string button { set; get; }
         public bool error { set; get; }
     }

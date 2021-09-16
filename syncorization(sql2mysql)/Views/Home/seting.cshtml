@@ -72,6 +72,10 @@ else if (ViewBag.testconectionM == "False" && ViewBag.testconectionC == "False")
         <div class="form-group d-block"><label>گذرواژه (sql)<br></label><input class="form-control SqlPassword" name="SqlPassword" type="password" required="" autocomplete="off" value="@Model.SqlPassword"></div>
         <div class="form-group d-block"><label>سال مالی</label><input class="form-control FiscalYear" type="number" name="FiscalYear" required="" value="@Model.FiscalYear"></div>
         <div class="form-group d-block"><label>آدرس سرویس</label><input class="form-control urlServises" type="url" name="urlServises" required="" autocomplete="on" inputmode="url" value="@Model.urlServises"><small class="form-text text-muted">مثال: https:mysite.com/api</small></div>
+        
+        <div class="form-group d-block"><label>گذرواژه اول سرویس</label><input class="form-control SqlUsername" name="firstPass" type="text" required="" autocomplete="on" value="@Model.firstPass"></div>
+        <div class="form-group d-block"><label>گذرواژه دوم سرویس</label><input class="form-control SqlUsername" name="secendPass" type="text" required="" autocomplete="on" value="@Model.secendPass"></div>
+
         <div class="submit">
             <button class="btn btn-secondary" name="button" value="save" type="submit">ذخیره</button>
             <button class="btn btn-secondary conection" name="button" type="submit" value="test">تست</button>

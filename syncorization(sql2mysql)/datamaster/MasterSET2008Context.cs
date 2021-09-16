@@ -63,9 +63,9 @@ namespace datamaster
                 Console.WriteLine(cs);
                 optionsBuilder.UseSqlServer(cs); 
 
-                Console.WriteLine("StartLog ********************************************************************");
-                optionsBuilder.LogTo(Console.WriteLine);
-                Console.WriteLine("EndLog ********************************************************************");
+                //Console.WriteLine("StartLog ********************************************************************");
+                //optionsBuilder.LogTo(Console.WriteLine);
+                //Console.WriteLine("EndLog ********************************************************************");
             }
         }
 

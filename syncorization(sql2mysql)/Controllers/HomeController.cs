@@ -12,6 +12,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using PagedList;
+using wooc_call;
+using WooCommerceNET.WooCommerce.v2;
 
 namespace Controllers
 {
@@ -29,14 +31,20 @@ namespace Controllers
         {
             Crm2008 = _Crm2008;
             master2008 = _master2008;
+            TEditor = new TextEditor("App_Data/seting.txt");
+            string seting = TEditor.Reader();
+            seting st = JsonConvert.DeserializeObject<seting>(seting);
+            Wocamers = new Woocall(st.urlServises,st.firstPass,st.secendPass);
         }
 
         protected IcrmManagment Crm2008 { set; get; }
         protected IdataManagment master2008 { set; get; }
-
+        protected TextEditor TEditor { get; set; }
+        protected Woocall Wocamers { get; set; }
 
         public ActionResult Index()
         {
+            var x = Wocamers.Get();
             return View();
         }
 
@@ -130,9 +138,9 @@ namespace Controllers
             return View(myseting);
         }
         //[Authorize]
-        public ActionResult list(int? page, string store1, string example)
+        public ActionResult list(int? page, string store1, string example, string serch)
         {
-
+            
             var x = Request;
 
 
@@ -158,15 +166,18 @@ namespace Controllers
 
             }
 
-            if (store1 != null || example != null)
+            if (store1 != null || example != null|| serch != null)
             {
                 string store = store1;
                 string Example = example;
                 ViewBag.store1 = store;
                 ViewBag.example = Example;
+                ViewBag.serch = serch;
 
                 if (store != "all") list = list.Where(s => s.StroeId.ToString() == store);
                 if (Example == "on") list = list.Where(s => s.Inventory > 0);
+                if (serch?.Trim() != null) list = list.Where(s => s.Name!=null && s.Name.Contains(serch));
+
             }
             //selectlist.list = null;
             //selectlist.list = list;

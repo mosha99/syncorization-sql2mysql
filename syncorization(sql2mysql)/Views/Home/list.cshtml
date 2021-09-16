@@ -150,31 +150,39 @@
 <div id="filter">
     <div class="" id="Dfilter" style="">
         <form class="form-inline" action="@Url.Action("list")">
-            <select class="form-control ff" name="store1">
+            @{ bool isFilter = (ViewBag.serch != null || ViewBag.example != null || (ViewBag.store1 != null&& ViewBag.store1 != "all"));
+            }
+            <div class="d-flex">
+                <input type="text" class="form-control" name="serch" value="@ViewBag.serch" />
 
-                <option value="all" selected>همه انبار ها</option>
-                @if (ViewBag.store != null)
-                {
-                    foreach (filtercs item in ViewBag.store)
+                <select class="form-control ff" name="store1">
+
+                    <option value="all" selected>همه انبار ها</option>
+                    @if (ViewBag.store != null)
                     {
-                        if (!string.IsNullOrWhiteSpace(item.name))
+                        foreach (filtercs item in ViewBag.store)
                         {
-    <option value="@item.stor_id">@item.name</option>
+                            if (!string.IsNullOrWhiteSpace(item.name))
+                            {
+        <option value="@item.stor_id">@item.name</option>
  }
-else
-{
-<option value="@item.stor_id">@item.stor_id</option>
+    else
+    {
+        <option value="@item.stor_id">@item.stor_id</option>
 }
 }
 }
 
 
-            </select>
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="switch1" name="example">
-                <label class="custom-control-label" for="switch1">فقط کالای موجود</label>
+                </select>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="switch1" name="example">
+                    <label class="custom-control-label" for="switch1">فقط کالای موجود</label>
+                </div>
             </div>
             <button class="btn btn-primary ff" type="submit">اعمال</button>
+            @if (isFilter) {<a class="btn btn-danger ff" href="@Url.Action("list")">لغو</a>}
+
         </form>
     </div>
 </div>
@@ -189,6 +197,7 @@ else
                     <th>کد انبار</th>
                     <th>نام کالا</th>
                     <th>کد کالا</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -201,8 +210,7 @@ else
         <td>@item.StroeId</td>
         <td>@item.Name</td>
         <td>@item.Id</td>
-    </tr>
-}
+    </tr>}
 
 
             </tbody>
@@ -210,11 +218,17 @@ else
         </table>
         <div id='Paging' style="text-align: center">
             @{ string query = "";
-                            if (ViewBag.store1 != null) query = $"store1={ViewBag.store1}";
-                            if (ViewBag.example != null && query != null) query += "&";
-                            if (ViewBag.example != null) query += $"example={ ViewBag.example}";
+                if (ViewBag.store1 != null) query = $"store1={ViewBag.store1}";
 
-                            ViewData["QS"] = query; }
+                if (ViewBag.example != null && query != null) query += "&";
+
+                if (ViewBag.example != null) query += $"example={ ViewBag.example}";
+
+                if (ViewBag.serch != null && query != null) query += "&";
+
+                if (ViewBag.serch != null) query += $"serch={ ViewBag.serch}";
+
+                ViewData["QS"] = query; }
             @await Html.PartialAsync("pagination", Model)
 
             @*@Html.PagedListPager(Model, page => Url.Action("list", new { page, ViewBag.store1, ViewBag.example }))*@
@@ -238,11 +252,11 @@ else
         $("#selectf").click(function () {
             $("#dcf").hide("blind", {}, 500, {});
         })
-                                //function callback() {
-                                //    setTimeout(function () {
-                                //        $("#Dfilter:visible").removeAttr("style").fadeOut();
-                                //    }, 1000);
-                                //};
+                                                    //function callback() {
+                                                    //    setTimeout(function () {
+                                                    //        $("#Dfilter:visible").removeAttr("style").fadeOut();
+                                                    //    }, 1000);
+                                                    //};
     </script>
 
 }
