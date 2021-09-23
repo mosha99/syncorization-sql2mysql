@@ -7,8 +7,10 @@
 @model IPagedList<VwProduct>
 
 
-@{ ViewBag.Title = "لیست کالاها";
+@{
+    ViewBag.Title = "لیست کالاها";
     Layout = "~/Views/Shared/_Layout.cshtml"; }
+
 @section title{لیست کالاها}
 @section style{
     <style>
@@ -150,8 +152,7 @@
 <div id="filter">
     <div class="" id="Dfilter" style="">
         <form class="form-inline" action="@Url.Action("list")">
-            @{ bool isFilter = (ViewBag.serch != null || ViewBag.example != null || (ViewBag.store1 != null&& ViewBag.store1 != "all"));
-            }
+            @{ bool isFilter = (ViewBag.serch != null || ViewBag.example != null || (ViewBag.store1 != null && ViewBag.store1 != "all")); }
             <div class="d-flex">
                 <input type="text" class="form-control" name="serch" value="@ViewBag.serch" />
 
@@ -164,14 +165,12 @@
                         {
                             if (!string.IsNullOrWhiteSpace(item.name))
                             {
-        <option value="@item.stor_id">@item.name</option>
- }
-    else
-    {
-        <option value="@item.stor_id">@item.stor_id</option>
-}
-}
-}
+        <option value="@item.stor_id">@item.name</option> }
+                            else
+                            {
+        <option value="@item.stor_id">@item.stor_id</option>}
+                        }
+                    }
 
 
                 </select>
@@ -181,7 +180,8 @@
                 </div>
             </div>
             <button class="btn btn-primary ff" type="submit">اعمال</button>
-            @if (isFilter) {<a class="btn btn-danger ff" href="@Url.Action("list")">لغو</a>}
+            @if (isFilter)
+            {<a class="btn btn-danger ff" href="@Url.Action("list")">لغو</a>}
 
         </form>
     </div>
@@ -210,7 +210,8 @@
         <td>@item.StroeId</td>
         <td>@item.Name</td>
         <td>@item.Id</td>
-    </tr>}
+    </tr>
+}
 
 
             </tbody>
@@ -252,11 +253,11 @@
         $("#selectf").click(function () {
             $("#dcf").hide("blind", {}, 500, {});
         })
-                                                    //function callback() {
-                                                    //    setTimeout(function () {
-                                                    //        $("#Dfilter:visible").removeAttr("style").fadeOut();
-                                                    //    }, 1000);
-                                                    //};
+                                                        //function callback() {
+                                                        //    setTimeout(function () {
+                                                        //        $("#Dfilter:visible").removeAttr("style").fadeOut();
+                                                        //    }, 1000);
+                                                        //};
     </script>
 
 }

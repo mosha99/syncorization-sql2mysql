@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "syncorization(sql2mysql)", "syncorization(sql2mysql)\syncorization(sql2mysql).csproj", "{C622FF79-359E-4B9D-97CC-ED655D624487}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wooc-call", "wooc-call\wooc-call.csproj", "{55D2EB8A-97FC-4732-9ABC-2F87DE317F95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wooc-call", "wooc-call\wooc-call.csproj", "{55D2EB8A-97FC-4732-9ABC-2F87DE317F95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{CFF680A2-84B8-4C04-9A23-601DD3852A06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{55D2EB8A-97FC-4732-9ABC-2F87DE317F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55D2EB8A-97FC-4732-9ABC-2F87DE317F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55D2EB8A-97FC-4732-9ABC-2F87DE317F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFF680A2-84B8-4C04-9A23-601DD3852A06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFF680A2-84B8-4C04-9A23-601DD3852A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFF680A2-84B8-4C04-9A23-601DD3852A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFF680A2-84B8-4C04-9A23-601DD3852A06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

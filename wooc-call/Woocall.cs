@@ -31,11 +31,11 @@ namespace wooc_call
 
         }
 
-        public async Task<List<Product>> Get()
+        public async Task<List<Product>> Get(Dictionary<string, string> directory)
         {
             try
             {
-                List<Product> products = await woc.Product.GetAll();
+                List<Product> products = await woc.Product.GetAll(directory);
                 return products;
             }
             catch (Exception ex)
@@ -46,11 +46,12 @@ namespace wooc_call
 
         }
 
-        public async Task<bool> Update(int id, Product product)
+        public async Task<bool> Update(uint? id, Product product)
         {
             try
             {
-                await woc.Product.Update(id, product);
+                int Id =Convert.ToInt32(id);
+                await woc.Product.Update(Id, product);
                 return true;
             }
             catch (Exception ex)

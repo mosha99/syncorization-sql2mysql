@@ -44,7 +44,6 @@ namespace Controllers
 
         public ActionResult Index()
         {
-            var x = Wocamers.Get();
             return View();
         }
 
