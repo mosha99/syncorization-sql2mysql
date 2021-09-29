@@ -14,33 +14,100 @@ using System.Linq;
 using PagedList;
 using wooc_call;
 using WooCommerceNET.WooCommerce.v2;
+using myClass;
+using WooCommerceNET;
+using System.Threading.Tasks;
 
 namespace Controllers
 {
 
-    public static class selectlist
+    public static class progses
     {
-        public static List<VwProduct> list;
+        public static double persent { set; get; } = 0;
+        public static bool error { set; get; } = false;
 
     }
 
     public class HomeController : Controller
     {
 
-        public HomeController(IcrmManagment _Crm2008 ,IdataManagment _master2008)
+        public HomeController(IcrmManagment _Crm2008, IdataManagment _master2008)
         {
             Crm2008 = _Crm2008;
             master2008 = _master2008;
             TEditor = new TextEditor("App_Data/seting.txt");
             string seting = TEditor.Reader();
-            seting st = JsonConvert.DeserializeObject<seting>(seting);
-            Wocamers = new Woocall(st.urlServises,st.firstPass,st.secendPass);
+            st = JsonConvert.DeserializeObject<seting>(seting);
+            Wocamers = new Woocall(st.urlServises, st.firstPass, st.secendPass);
+            wset = new WooSet(Wocamers);
         }
 
+        protected seting st { set; get; }
         protected IcrmManagment Crm2008 { set; get; }
         protected IdataManagment master2008 { set; get; }
         protected TextEditor TEditor { get; set; }
         protected Woocall Wocamers { get; set; }
+        protected WooSet wset { get; set; }
+
+        [HttpPost]
+        public async Task<double> prog()
+        {
+            double pr = progses.persent;
+            return pr;
+        }
+
+        [HttpPost]
+        public async Task wooset()
+        {
+            try
+            {
+                List<int> ids = new List<int>();
+                List<VwProduct> Ls = new List<VwProduct>();
+                string store1 =null;
+                string example =null;
+                string serch =null;
+
+                string cok = Request.Cookies.FirstOrDefault(x => x.Key == "fil").Value;
+                var x = cok.Split('|');
+
+                if (!string.IsNullOrWhiteSpace(x[0])) store1 = x[0];
+                if (!string.IsNullOrWhiteSpace(x[1])) example = x[1];
+                if (!string.IsNullOrWhiteSpace(x[2])) serch = x[2];
+
+
+
+                var list = master2008.getall();
+
+                if (store1 != null || example != null || serch != null)
+                {
+                    string store = store1;
+                    string Example = example;
+                    ViewBag.store1 = store;
+                    ViewBag.example = Example;
+                    ViewBag.serch = serch;
+
+                    if (store != "all") list = list.Where(s => s.StroeId.ToString() == store);
+                    if (Example == "on") list = list.Where(s => s.Inventory > 0);
+                    if (serch?.Trim() != null) list = list.Where(s => s.Name != null && s.Name.Contains(serch));
+
+                }
+
+                Ls = list.ToList();
+                Ls.ForEach(x => ids.Add(Convert.ToInt32(x.Id)));
+
+                await wset.AllSet(master2008.getall(), ids);
+
+                progses.error = false;
+
+            }
+            catch (Exception ex)
+            {
+                progses.error = true;
+                throw;
+            }
+            return;
+        }
+
 
         public ActionResult Index()
         {
@@ -139,12 +206,22 @@ namespace Controllers
         //[Authorize]
         public ActionResult list(int? page, string store1, string example, string serch)
         {
-            
+
             var x = Request;
 
-
-
+            Response.Cookies.Append("fil" , store1+'|'+example+'|'+serch );
+            IPagedList<VwProduct> pList;
             var list = master2008.getall();
+
+            int? code = master2008.GetYearCode(st.FiscalYear);
+
+            if (code == null || code == 0)
+            {
+                pList = new List<VwProduct>().ToPagedList(1, 1);
+                return View(pList);
+            }
+
+            list = list.Where(x => x.Year == code.Value);
 
             List<filtercs> storlist = new List<filtercs>();
 
@@ -165,7 +242,7 @@ namespace Controllers
 
             }
 
-            if (store1 != null || example != null|| serch != null)
+            if (store1 != null || example != null || serch != null)
             {
                 string store = store1;
                 string Example = example;
@@ -175,7 +252,7 @@ namespace Controllers
 
                 if (store != "all") list = list.Where(s => s.StroeId.ToString() == store);
                 if (Example == "on") list = list.Where(s => s.Inventory > 0);
-                if (serch?.Trim() != null) list = list.Where(s => s.Name!=null && s.Name.Contains(serch));
+                if (serch?.Trim() != null) list = list.Where(s => s.Name != null && s.Name.Contains(serch));
 
             }
             //selectlist.list = null;
@@ -183,10 +260,13 @@ namespace Controllers
 
             List<commodity> vlist = new List<commodity>();
 
-            IList<VwProduct> Ls = new List<VwProduct>();
-            Ls = list.ToList();
-            IPagedList<VwProduct> pList = Ls.ToPagedList(page ?? 1, 9);
+            List<VwProduct> Ls = new List<VwProduct>();
 
+            List<int> ids = new List<int>();
+            Ls = list.ToList();
+            pList = Ls.ToPagedList(page ?? 1, 9);
+            string f = JsonConvert.SerializeObject(ids);
+            Response.Cookies.Append("intarry",f);
 
             //IPagedList<VwProduct> pList = list.ToPagedList(page ?? 1, 9);
             ViewBag.store = storlist;
@@ -444,7 +524,7 @@ namespace Controllers
 
             listc = Lcrm.ToPagedList(page ?? 1, 9);
 
-            return RedirectToAction("serchCRM" ,new { serch= serch});
+            return RedirectToAction("serchCRM", new { serch = serch });
         }
 
     }

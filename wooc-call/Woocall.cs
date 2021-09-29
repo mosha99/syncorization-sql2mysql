@@ -74,7 +74,6 @@ namespace wooc_call
             }
         }
 
-
         public async Task<bool> Delet(int id)
         {
             try

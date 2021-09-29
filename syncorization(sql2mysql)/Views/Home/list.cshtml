@@ -150,7 +150,7 @@
 @*@section list{disabled}*@
 
 <div id="filter">
-    <div class="" id="Dfilter" style="">
+    <div class="" id="Dfilter" style="text-align:center">
         <form class="form-inline" action="@Url.Action("list")">
             @{ bool isFilter = (ViewBag.serch != null || ViewBag.example != null || (ViewBag.store1 != null && ViewBag.store1 != "all")); }
             <div class="d-flex">
@@ -165,10 +165,12 @@
                         {
                             if (!string.IsNullOrWhiteSpace(item.name))
                             {
-        <option value="@item.stor_id">@item.name</option> }
+                                <option value="@item.stor_id">@item.name</option>
+                            }
                             else
                             {
-        <option value="@item.stor_id">@item.stor_id</option>}
+                                <option value="@item.stor_id">@item.stor_id</option>
+                            }
                         }
                     }
 
@@ -181,9 +183,18 @@
             </div>
             <button class="btn btn-primary ff" type="submit">اعمال</button>
             @if (isFilter)
-            {<a class="btn btn-danger ff" href="@Url.Action("list")">لغو</a>}
+            {<a class="btn btn-danger ff">لغو</a>}
 
         </form>
+        <button class="btn btn-primary" style=" margin-top: 7px; " id="settowoc">هماهنگ سازی کالاهای فیلتر شده</button>
+        <div  style="width: 50%; margin-right: auto; margin-left: auto; margin-top: 9px;">
+            <div class="progress d-none">
+                <div class="progress-bar" role="progressbar" style="width: 0% ;height: 44px;background: #28435fe8;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <span  class="btn btn-success  d-none" style="margin-top: 10px;">عملیات با موفقیت پایان یافت</span>
+
+
     </div>
 </div>
 <div class="container-lg d-flex justify-content-center align-items-center align-content-center justify-content-xl-center align-items-xl-center div-c" style="/*height: 83%;*/">
@@ -203,15 +214,15 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-    <tr>
-        <td>@item.Inventory</td>
-        <td>@Number.spacer(item.SalePrice)</td>
-        <td>@item.StoreName</td>
-        <td>@item.StroeId</td>
-        <td>@item.Name</td>
-        <td>@item.Id</td>
-    </tr>
-}
+                    <tr>
+                        <td>@item.Inventory</td>
+                        <td>@Number.spacer(item.SalePrice)</td>
+                        <td>@item.StoreName</td>
+                        <td>@item.StroeId</td>
+                        <td>@item.Name</td>
+                        <td>@item.Id</td>
+                    </tr>
+                }
 
 
             </tbody>
@@ -243,6 +254,7 @@
 @section scripts{
     <script src="~/assets/js/jquery-ui.min.js"></script>
     <script>
+        var per = 0;
         //alert("top:" + $("#filter").outerHeight() + ";")
         $(".pagination").children("li").addClass("page-item");
         $(".pagination").children("li").children("a").addClass("page-link");
@@ -253,11 +265,52 @@
         $("#selectf").click(function () {
             $("#dcf").hide("blind", {}, 500, {});
         })
-                                                        //function callback() {
-                                                        //    setTimeout(function () {
-                                                        //        $("#Dfilter:visible").removeAttr("style").fadeOut();
-                                                        //    }, 1000);
-                                                        //};
+
+        $('#settowoc').click(async function () {
+            $.ajax({
+                url: "@Url.Action("wooset")",
+                type: "post",
+                data: {},
+                success: function () {
+                },
+                failure: function (jqXHR, textStatus, errorThrown) {
+                    alert("Status: " + jqXHR.status + "; Error: " + jqXHR.responseText); // Display error message
+                }
+            });
+
+            $('.progress').removeClass('d-none');
+            $('.progress-bar').css('width', '1%');
+            per = 1;
+
+            await dst();
+        });
+        var to;
+        async function dst() {
+
+            return new Promise(resolve => {
+              to = setInterval(start, 2000);
+            });
+        }
+
+        function start() {
+            $.ajax({
+
+                url: "@Url.Action("prog")",
+                type: "post",
+                data: {},
+                success: function (respons) {
+                    per = respons;
+                    $('.progress-bar').css('width', respons + '%')
+                }
+
+            });
+            if (per == 100) {
+                clearInterval(to);
+                $('.btn-success').removeClass('d-none');
+            }
+        }
+
+
     </script>
 
 }

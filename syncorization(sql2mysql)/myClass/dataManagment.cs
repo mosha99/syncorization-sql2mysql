@@ -7,14 +7,20 @@ namespace DataEditor.myClass
     public interface IdataManagment
     {
         public IQueryable<VwProduct> getall();
-        public  void test();
+        public void test();
+        public int? GetYearCode(int year);
 
     }
 
-    public class dataManagment:IdataManagment
+    public class years
     {
-         MasterSET2008Context db = new MasterSET2008Context();
-        public  IQueryable<VwProduct> getall()
+        public int year { set; get; }
+        public int code { set; get; }
+    }
+    public class dataManagment : IdataManagment
+    {
+        MasterSET2008Context db = new MasterSET2008Context();
+        public IQueryable<VwProduct> getall()
         {
             IQueryable<VwProduct> list;
             var x = db.VwProducts.Count();
@@ -23,7 +29,14 @@ namespace DataEditor.myClass
             return list;
         }
 
-        public  void test() => db.SaveChanges();
+        public void test() => db.SaveChanges();
+
+        public int? GetYearCode(int year)
+        {
+            int? code = db.VwCompanies.FirstOrDefault(x => x.YearName == year).Year;
+            return code;
+        }
 
     }
+
 }
