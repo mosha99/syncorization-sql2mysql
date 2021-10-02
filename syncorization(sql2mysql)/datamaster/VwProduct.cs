@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace datamaster
 {
-    public partial class VwProduct: Iproduct
+    public partial class VwProduct
     {
         public int Year { get; set; }
         public double Id { get; set; }
@@ -16,5 +16,6 @@ namespace datamaster
         public double? SalePrice { get; set; }
         public string Unit { get; set; }
         public double? Inventory { get; set; }
+        public double? SalePrice2 { get; set; }
     }
 }

@@ -95,7 +95,7 @@ namespace myClass
             {
                 i.in_stock = true;
                 i.stock_quantity = Convert.ToInt32(Datalist.FirstOrDefault(x => x.Id.ToString() == i.sku.ToString())?.Inventory == null ? 0 : Datalist.FirstOrDefault(x => x.Id.ToString() == i.sku.ToString())?.Inventory);
-                i.sale_price = Convert.ToDecimal(Datalist.FirstOrDefault(x => x.Id.ToString() == i.sku.ToString())?.SalePrice == null ? 0 : Datalist.FirstOrDefault(x => x.Id.ToString() == i.sku.ToString())?.SalePrice);
+                i.sale_price = Convert.ToDecimal(Datalist.FirstOrDefault(x => x.Id.ToString() == i.sku.ToString())?.SalePrice2 == null ? 0 : Datalist.FirstOrDefault(x => x.Id.ToString() == i.sku.ToString())?.SalePrice2);
                 i.regular_price = Convert.ToDecimal(i.sale_price == null ? 0 : i.sale_price);
             }
 
