@@ -152,38 +152,65 @@
 <div id="filter">
     <div class="" id="Dfilter" style="text-align:center">
         <form class="form-inline" action="@Url.Action("list")">
-            @{ bool isFilter = (ViewBag.serch != null || ViewBag.example != null || (ViewBag.store1 != null && ViewBag.store1 != "all")); }
+            @{ bool isFilter = (ViewBag.serch != null || ViewBag.example != null || (ViewBag.store1 != null && ViewBag.Year1 != "all")); }
             <div class="d-flex">
                 <input type="text" class="form-control" name="serch" value="@ViewBag.serch" />
 
                 <select class="form-control ff" name="store1">
 
-                    <option value="all" selected>همه انبار ها</option>
+                    ViewBag.Year1
+                    ViewBag.example
+                    ViewBag.serch
+                    <option value="all" @if (ViewBag.store1 == null || ViewBag.store1 == "all") { <text> selected</text>}>همه انبار ها</option>
                     @if (ViewBag.store != null)
                     {
                         foreach (filtercs item in ViewBag.store)
                         {
                             if (!string.IsNullOrWhiteSpace(item.name))
                             {
-                                <option value="@item.stor_id">@item.name</option>
+                                <option value="@item.stor_id" @if (ViewBag.store1 == item.stor_id.ToString()) { <text> selected</text>}>@item.name</option>
                             }
                             else
                             {
-                                <option value="@item.stor_id">@item.stor_id</option>
+                                <option value="@item.stor_id" @if (ViewBag.store1 == item.stor_id.ToString()) { <text> selected</text>}>@item.stor_id</option>
                             }
                         }
                     }
 
 
                 </select>
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="switch1" name="example">
-                    <label class="custom-control-label" for="switch1">فقط کالای موجود</label>
-                </div>
+
+                <select class="form-control ff" name="Year1">
+
+                    <option value="all" @if (ViewBag.Year1 == null || ViewBag.Year1 == "all") { <text> selected</text>}>همه سال های مالی</option>
+
+                    @if (ViewBag.Year != null)
+                    {
+                        foreach (FilterYear item in ViewBag.Year)
+                        {
+
+                            <option value="@item.num" @if (ViewBag.Year1 == item.num.ToString()) { <text> selected</text>}>@item.Name</option>
+
+                        }
+                    }
+
+
+                </select>
+
+                <select class="form-control ff" name="example">
+
+                    <option value="0" @if (ViewBag.example == null || ViewBag.example == "0") { <text> selected</text>}>همه کالا ها</option>
+                    <option value="1" @if (ViewBag.example == "1") { <text>selected</text>}>کالا های دارای موجودی</option>
+                    <option value="2" @if (ViewBag.example == "2") { <text>selected</text>}>کالاهای دارای قیمت</option>
+                    <option value="3" @if (ViewBag.example == "3") { <text>selected</text>}>کالاهای دارای موجودی و قیمت</option>
+
+                </select>
+
+
             </div>
             <button class="btn btn-primary ff" type="submit">اعمال</button>
             @if (isFilter)
-            {<a class="btn btn-danger ff">لغو</a>}
+            {<a class="btn btn-danger " href="@Url.Action("List")">لغو</a>}
 
         </form>
         <button class="btn btn-primary" style=" margin-top: 7px; " id="settowoc">هماهنگ سازی کالاهای فیلتر شده</button>
@@ -216,7 +243,7 @@
                 {
                     <tr>
                         <td>@item.Inventory</td>
-                        <td>@Number.spacer(item.SalePrice)</td>
+                        <td>@Number.spacer(item.SalePrice2)</td>
                         <td>@item.StoreName</td>
                         <td>@item.StroeId</td>
                         <td>@item.Name</td>

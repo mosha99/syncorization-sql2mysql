@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DataEditor.Models;
 using datamaster;
 
 namespace DataEditor.myClass
@@ -8,8 +9,7 @@ namespace DataEditor.myClass
     {
         public IQueryable<VwProduct> getall();
         public void test();
-        public int? GetYearCode(int year);
-
+        public List<FilterYear> GetYearCode();
     }
 
     public class years
@@ -31,10 +31,15 @@ namespace DataEditor.myClass
 
         public void test() => db.SaveChanges();
 
-        public int? GetYearCode(int year)
+        public List<FilterYear> GetYearCode()
         {
-            int? code = db.VwCompanies.FirstOrDefault(x => x.YearName == year).Year;
-            return code;
+            List<VwCompany> List = db.VwCompanies.ToList();
+            List<FilterYear> li = new List<FilterYear>();
+            foreach (VwCompany item in List)
+            {
+                li.Add(new FilterYear() {Name=item.Company +" : "+item.YearName, num=item.Year });
+            }
+            return li;
         }
 
     }

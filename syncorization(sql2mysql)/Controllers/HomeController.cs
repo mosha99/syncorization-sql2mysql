@@ -63,9 +63,9 @@ namespace Controllers
             {
                 List<int> ids = new List<int>();
                 List<VwProduct> Ls = new List<VwProduct>();
-                string store1 =null;
-                string example =null;
-                string serch =null;
+                string store1 = null;
+                string example = null;
+                string serch = null;
 
                 string cok = Request.Cookies.FirstOrDefault(x => x.Key == "fil").Value;
                 var x = cok.Split('|');
@@ -204,16 +204,16 @@ namespace Controllers
             return View(myseting);
         }
         //[Authorize]
-        public ActionResult list(int? page, string store1, string example, string serch)
+        public ActionResult list(int? page, string store1, string example, string serch, string Year1)
         {
 
             var x = Request;
 
-            Response.Cookies.Append("fil" , store1+'|'+example+'|'+serch );
+            Response.Cookies.Append("fil", store1 + '|' + example + '|' + serch + '|' + Year1);
             IPagedList<VwProduct> pList;
             var list = master2008.getall();
 
-            int? code = master2008.GetYearCode(st.FiscalYear);
+            /*int? code = master2008.GetYearCode(st.FiscalYear);
 
             if (code == null || code == 0)
             {
@@ -222,8 +222,10 @@ namespace Controllers
             }
 
             list = list.Where(x => x.Year == code.Value);
-
+            */
             List<filtercs> storlist = new List<filtercs>();
+
+            List<filtercs> Yearlist = new List<filtercs>();
 
             foreach (var item in list)
             {
@@ -242,16 +244,33 @@ namespace Controllers
 
             }
 
-            if (store1 != null || example != null || serch != null)
+            if (store1 != null || example != null || serch != null || Year1 != null)
             {
                 string store = store1;
+                string Years = Year1;
                 string Example = example;
                 ViewBag.store1 = store;
+                ViewBag.Year1 = Years;
                 ViewBag.example = Example;
                 ViewBag.serch = serch;
 
                 if (store != "all") list = list.Where(s => s.StroeId.ToString() == store);
-                if (Example == "on") list = list.Where(s => s.Inventory > 0);
+                if (Years != "all") list = list.Where(s => s.Year.ToString() == Years);
+                switch (Example)
+                {
+                    case "1":
+                        list = list.Where(s => s.Inventory != null && s.Inventory > 0 );
+
+                        break;
+                    case "2":
+                        list = list.Where(s => s.SalePrice2 != null &&s.SalePrice2 != 0 );
+                        break;
+                    case "3":
+                        list = list.Where(s =>s.Inventory!=null && s.Inventory>0 && s.SalePrice2 != null);
+                        break;
+                    default:
+                        break;
+                }
                 if (serch?.Trim() != null) list = list.Where(s => s.Name != null && s.Name.Contains(serch));
 
             }
@@ -266,10 +285,12 @@ namespace Controllers
             Ls = list.ToList();
             pList = Ls.ToPagedList(page ?? 1, 9);
             string f = JsonConvert.SerializeObject(ids);
-            Response.Cookies.Append("intarry",f);
+            Response.Cookies.Append("intarry", f);
 
             //IPagedList<VwProduct> pList = list.ToPagedList(page ?? 1, 9);
             ViewBag.store = storlist;
+            ViewBag.store = storlist;
+            ViewBag.Year = master2008.GetYearCode();
             return View(pList);
         }
 
