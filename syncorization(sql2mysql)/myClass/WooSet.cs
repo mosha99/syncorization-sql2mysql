@@ -38,6 +38,9 @@ namespace myClass
 
         public async Task AllSet(IQueryable<VwProduct> Datalist, List<int> filter)
         {
+            double percent = Datalist.Count();
+            if (percent != 0) percent = 75 / percent;
+
             if (filter.Count() == 0)
             {
                 progses.persent = 100;
@@ -53,6 +56,32 @@ namespace myClass
             int pagecount = 64;
             progses.persent = 0;
 
+            List<double> ErrorL = new List<double>();
+
+
+            foreach (VwProduct item in Datalist)
+            {
+                try
+                {
+                    Dictionary<string, string> d = new Dictionary<string, string>();
+                    d.Add("sku", item.Id.ToString());
+                    List<Product> k = await woc.Get(d);
+                    progses.persent += percent;
+                    if (k!=null && k.Count() != 0)
+                    finalset.AddRange(k);
+                }
+                catch (Exception ex)
+                {
+                    double gh =item.Id;
+                    ErrorL.Add(gh);
+                }
+
+            }
+
+            //var x1 = finalset.Where(x => x.id == 135);
+            //ErrorL=ErrorL.ToList();
+
+            /*
             for (int i = 1; i < 10000000; i++)
             {
 
@@ -62,29 +91,41 @@ namespace myClass
                 directory.Add("page", i.ToString());
                 try
                 {
-                    var x = await woc.Get(directory);
-                    UnBuyable.AddRange(x.Where(x => string.IsNullOrWhiteSpace(x.sku)).ToList());
-                    Buyable.AddRange(x.Where(x => !string.IsNullOrWhiteSpace(x.sku)).ToList());
+                    var y = await woc.Get(directory);
+                    if (y.ToList().Count()==0)
+                    {
+                        throw new Exception();
+                    }
+                    ft.AddRange(y.ToList());
+                    UnBuyable.AddRange(y.Where(x => string.IsNullOrWhiteSpace(x.sku)).ToList());
+                    Buyable.AddRange(y.Where(x => !string.IsNullOrWhiteSpace(x.sku)).ToList());
                     progses.persent += 4;
                     Console.WriteLine("e1");
                 }
                 catch (Exception)
                 {
                     if (pagecount == 1) break;
-                    i = (i - 1) * 2;
+                    i = ((i -1)* 2);
                     pagecount /= 2;
+                    if (pagecount == 1)
+                        pagecount = 1;
                 }
 
             }
+            */
 
+            /*ft = ft.OrderBy(x => x.id).ToList();
+            ft.ForEach(x => Console.WriteLine(x.id));*/
 
-            foreach (var item in Buyable)
-            {
-                if (filter.Where(x => x.ToString() == item.sku.ToString()).Count() != 0)
-                {
-                    finalset.Add(item);
-                }
-            }
+            /**/
+
+            /* foreach (var item in Buyable)
+             {
+                 if (filter.FirstOrDefault(x => x.ToString() == item.sku.ToString()) != 0)
+                 {
+                     finalset.Add(item);
+                 }
+             }*/
 
 
 
@@ -103,7 +144,8 @@ namespace myClass
             {
                 i.in_stock = false;
             }
-            //finalset.AddRange(UnBuyable);
+
+            finalset.AddRange(UnBuyable);
 
             double m = 100 - progses.persent;
             int coupdate = (finalset.Count() / 50) + 1;

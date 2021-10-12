@@ -256,6 +256,7 @@
 
         </table>
         <div id='Paging' style="text-align: center">
+
             @{ string query = "";
                 if (ViewBag.store1 != null) query = $"store1={ViewBag.store1}";
 
@@ -266,6 +267,11 @@
                 if (ViewBag.serch != null && query != null) query += "&";
 
                 if (ViewBag.serch != null) query += $"serch={ ViewBag.serch}";
+
+                if (ViewBag.Year1 != null && query != null) query += "&";
+
+                if (ViewBag.Year1 != null) query += $"Year1={ ViewBag.Year1}";
+
 
                 ViewData["QS"] = query; }
             @await Html.PartialAsync("pagination", Model)
