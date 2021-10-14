@@ -65,7 +65,9 @@ namespace wooc_call
         {
             try
             {
-                await woc.Product.UpdateRange(new WooCommerceNET.Base.BatchObject<Product> { update= products});
+                ProductBatch bt = new ProductBatch();
+                bt.update= products;
+                await woc.Product.UpdateRange(bt);
                 return true;
             }
             catch (Exception ex)
