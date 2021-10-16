@@ -17,6 +17,7 @@ using WooCommerceNET.WooCommerce.v2;
 using myClass;
 using WooCommerceNET;
 using System.Threading.Tasks;
+using syncorization_sql2mysql_.myClass.Auth;
 
 namespace Controllers
 {
@@ -27,7 +28,7 @@ namespace Controllers
         public static bool error { set; get; } = false;
 
     }
-
+    [AuthAttribute]
     public class HomeController : Controller
     {
 
@@ -40,6 +41,7 @@ namespace Controllers
             st = JsonConvert.DeserializeObject<seting>(seting);
             Wocamers = new Woocall(st.urlServises, st.firstPass, st.secendPass);
             wset = new WooSet(Wocamers);
+            var x = HttpContext;
         }
 
         protected seting st { set; get; }
@@ -53,11 +55,16 @@ namespace Controllers
         public async Task<double> prog()
         {
             double pr = progses.persent;
+            if (pr == 100)
+            {
+                progses.persent = 0;
+                return 100;
+            }
             return pr;
         }
 
         [HttpPost]
-        public async Task wooset()
+        public async Task wooset(string a)
         {
             try
             {
@@ -66,6 +73,7 @@ namespace Controllers
                 string store1 = null;
                 string example = null;
                 string serch = null;
+                string Year1 = null;
 
                 string cok = Request.Cookies.FirstOrDefault(x => x.Key == "fil").Value;
                 var x = cok.Split('|');
@@ -73,6 +81,8 @@ namespace Controllers
                 if (!string.IsNullOrWhiteSpace(x[0])) store1 = x[0];
                 if (!string.IsNullOrWhiteSpace(x[1])) example = x[1];
                 if (!string.IsNullOrWhiteSpace(x[2])) serch = x[2];
+                if (!string.IsNullOrWhiteSpace(x[3])) Year1 = x[3];
+
 
 
 
@@ -81,13 +91,16 @@ namespace Controllers
                 if (store1 != null || example != null || serch != null)
                 {
                     string store = store1;
+                    string Years = Year1;
                     string Example = example;
                     ViewBag.store1 = store;
                     ViewBag.example = Example;
                     ViewBag.serch = serch;
+                    ViewBag.Year1 = Years;
 
-                    if (store != "all") list = list.Where(s => s.StroeId.ToString() == store);
-                    if (Example == "on") list = list.Where(s => s.Inventory > 0);
+                    if (store != "all")        list = list.Where(s => s.StroeId.ToString() == store);
+                    if (Years != "all")        list = list.Where(s => s.Year.ToString() == Years);
+                    if (Example == "on")       list = list.Where(s => s.Inventory > 0);
                     if (serch?.Trim() != null) list = list.Where(s => s.Name != null && s.Name.Contains(serch));
 
                 }
@@ -95,7 +108,7 @@ namespace Controllers
                 Ls = list.ToList();
                 Ls.ForEach(x => ids.Add(Convert.ToInt32(x.Id)));
 
-                await wset.AllSet(master2008.getall(), ids);
+                await wset.AllSet(list, ids ,a);
 
                 progses.error = false;
 
@@ -111,7 +124,7 @@ namespace Controllers
 
         public ActionResult Index()
         {
-            return View();
+                return View();
         }
 
         //[Authorize]
@@ -204,7 +217,7 @@ namespace Controllers
             return View(myseting);
         }
         //[Authorize]
-        public ActionResult list(int? page, string store1, string example, string serch, string Year1)
+        public ActionResult list(int? page, string store1, string example, string serch, string Year1,string WhithIna)
         {
 
             var x = Request;
@@ -417,34 +430,36 @@ namespace Controllers
             }
 
         }
-
+        [AllowAnonymous]
         public ActionResult login(string ReturnUrl)
         {
             login log = new login();
-            log.url = ReturnUrl;
+            log.urlredirect = ReturnUrl;
             return View(log);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+
+        //[ValidateAntiForgeryToken]
         public ActionResult login(login log, string ReturnUrl)
         {
             string url = ReturnUrl;
-            if (log.password != "password")
+            if (log.password != st.pass)
             {
                 ViewBag.error = "true";
                 return View(log);
             }
-            //FormsAuthentication.SetAuthCookie("admin", true);
-            return Redirect(log.url);
+
+            string ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+            Response.Cookies.Append("woocport", (ip.GetHashCode() + st.pass.GetHashCode()).ToString());
+
+            return Redirect(log.urlredirect);
         }
 
         public ActionResult logout()
         {
-            if (User.Identity.IsAuthenticated != false)
-            {
-                //FormsAuthentication.SignOut();
-            }
+            Response.Cookies.Delete("woocport");
             return Redirect("index");
         }
 

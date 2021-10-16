@@ -8,6 +8,6 @@ namespace DataEditor.Models
     public class login
     {
         public string password { get; set; }
-        public string url { get; set; }
+        public string urlredirect { get; set; }
     }
 }

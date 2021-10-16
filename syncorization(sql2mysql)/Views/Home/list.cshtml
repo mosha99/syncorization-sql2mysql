@@ -168,11 +168,11 @@
                         {
                             if (!string.IsNullOrWhiteSpace(item.name))
                             {
-                                <option value="@item.stor_id" @if (ViewBag.store1 == item.stor_id.ToString()) { <text> selected</text>}>@item.name</option>
+                    <option value="@item.stor_id" @if (ViewBag.store1 == item.stor_id.ToString()) { <text> selected</text>}>@item.name</option>
                             }
                             else
                             {
-                                <option value="@item.stor_id" @if (ViewBag.store1 == item.stor_id.ToString()) { <text> selected</text>}>@item.stor_id</option>
+                    <option value="@item.stor_id" @if (ViewBag.store1 == item.stor_id.ToString()) { <text> selected</text>}>@item.stor_id</option>
                             }
                         }
                     }
@@ -189,7 +189,7 @@
                         foreach (FilterYear item in ViewBag.Year)
                         {
 
-                            <option value="@item.num" @if (ViewBag.Year1 == item.num.ToString()) { <text> selected</text>}>@item.Name</option>
+                    <option value="@item.num" @if (ViewBag.Year1 == item.num.ToString()) { <text> selected</text>}>@item.Name</option>
 
                         }
                     }
@@ -200,26 +200,28 @@
                 <select class="form-control ff" name="example">
 
                     <option value="0" @if (ViewBag.example == null || ViewBag.example == "0") { <text> selected</text>}>همه کالا ها</option>
-                    <option value="1" @if (ViewBag.example == "1") { <text>selected</text>}>کالا های دارای موجودی</option>
-                    <option value="2" @if (ViewBag.example == "2") { <text>selected</text>}>کالاهای دارای قیمت</option>
-                    <option value="3" @if (ViewBag.example == "3") { <text>selected</text>}>کالاهای دارای موجودی و قیمت</option>
+                    <option value="1" @if (ViewBag.example == "1") { <text> selected</text>}>کالا های دارای موجودی</option>
+                    <option value="2" @if (ViewBag.example == "2") { <text> selected</text>}>کالاهای دارای قیمت</option>
+                    <option value="3" @if (ViewBag.example == "3") { <text> selected</text>}>کالاهای دارای موجودی و قیمت</option>
 
                 </select>
 
 
             </div>
-            <button class="btn btn-primary ff" type="submit">اعمال</button>
+            <button class="btn btn-warning ff" type="submit">اعمال</button>
             @if (isFilter)
             {<a class="btn btn-danger " href="@Url.Action("List")">لغو</a>}
 
         </form>
         <button class="btn btn-primary" style=" margin-top: 7px; " id="settowoc">هماهنگ سازی کالاهای فیلتر شده</button>
-        <div  style="width: 50%; margin-right: auto; margin-left: auto; margin-top: 9px;">
+        <button class="btn btn-success" style=" margin-top: 7px; " id="settowoc1">هماهنگ سازی کالاهای فیلتر شده همراه با موجودی</button>
+
+        <div style="width: 50%; margin-right: auto; margin-left: auto; margin-top: 9px;">
             <div class="progress d-none">
                 <div class="progress-bar" role="progressbar" style="width: 0% ;height: 44px;background: #28435fe8;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
         </div>
-        <span  class="btn btn-success  d-none" style="margin-top: 10px;">عملیات با موفقیت پایان یافت</span>
+        <span class="btn btn-success  d-none" style="margin-top: 10px;">عملیات با موفقیت پایان یافت</span>
 
 
     </div>
@@ -303,7 +305,7 @@
             $.ajax({
                 url: "@Url.Action("wooset")",
                 type: "post",
-                data: {},
+                data: {"a":"a"},
                 success: function () {
                 },
                 failure: function (jqXHR, textStatus, errorThrown) {
@@ -317,6 +319,26 @@
 
             await dst();
         });
+
+        $('#settowoc1').click(async function () {
+            $.ajax({
+                url: "@Url.Action("wooset")",
+                type: "post",
+                data: {"a":"b"},
+                success: function () {
+                },
+                failure: function (jqXHR, textStatus, errorThrown) {
+                    alert("Status: " + jqXHR.status + "; Error: " + jqXHR.responseText); // Display error message
+                }
+            });
+
+            $('.progress').removeClass('d-none');
+            $('.progress-bar').css('width', '1%');
+            per = 1;
+
+            await dst();
+        });
+
         var to;
         async function dst() {
 

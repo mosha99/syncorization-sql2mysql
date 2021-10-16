@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using wooc_call;
+using System.Threading;
 using WooCommerceNET.WooCommerce.v2;
 
 namespace myClass
@@ -43,7 +44,7 @@ namespace myClass
             await woc.Update(id, product);
         }
 
-        public async Task AllSet(IQueryable<VwProduct> Datalist, List<int> filter)
+        public async Task AllSet(IQueryable<VwProduct> Datalist, List<int> filter,string a)
         {
 
             List<Product> sendable = new List<Product>();
@@ -78,17 +79,23 @@ namespace myClass
 
             }
 
-
+            var ff = Buyable.Where(x => x.sku == "135" || x.sku == "357");
             try
             {
-                foreach (var g in Datalist)
+                foreach (var g in filter)
                 {
                     Product i = new Product();
-                    uint? id = Buyable.FirstOrDefault(x=>x.sku==g.Id.ToString())?.id;
+                    uint? id = Buyable.FirstOrDefault(x=>x.sku==g.ToString())?.id;
                     if (id == null) continue;
                     i.id = id;
                     i.in_stock = true;
-                    i.sale_price =     Convert.ToDecimal(Datalist.FirstOrDefault(x => x.Id.ToString() == i.sku.ToString())?.SalePrice2 == null ? 0 : Datalist.FirstOrDefault(x => x.Id.ToString() == i.sku.ToString())?.SalePrice2);
+
+                    var prod = Datalist.FirstOrDefault(x => x.Id.ToString() == g.ToString());
+                    var t =prod.SalePrice2;
+
+                    Console.WriteLine($"prodouct id : {id} sku : {g}  price : {t}  yer : {prod.Year} updated");
+                    if (a == "b") i.stock_quantity = Convert.ToInt32(prod.Inventory);
+                    i.sale_price =     Convert.ToDecimal(t);
                     i.regular_price =  Convert.ToDecimal(i.sale_price == null ? 0 : i.sale_price);
                     finalset.Add(i);
                 }
@@ -108,6 +115,7 @@ namespace myClass
                 progses.persent += m;
                 await woc.UpdateRange(finalset);
                 progses.persent = 100;
+               
 
             }
             catch (Exception ex)
