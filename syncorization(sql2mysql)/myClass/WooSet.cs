@@ -44,13 +44,13 @@ namespace myClass
             await woc.Update(id, product);
         }
 
-        public async Task AllSet(IQueryable<VwProduct> Datalist, List<int> filter,string a)
+        public async Task AllSet(IQueryable<VwProduct> Datalist, List<int> filter, string a)
         {
 
             List<Product> sendable = new List<Product>();
 
             List<Product> finalset = new List<Product>();
-            
+
             List<Product> Buyable = new List<Product>();
 
 
@@ -65,11 +65,11 @@ namespace myClass
 
                 try
                 {
-                   
+
                     var y = await woc.Get(directory);
                     Buyable.AddRange(y.ToList());
                     if (y.Count() == 0) break;
-                    progses.persent += 50.0/20;
+                    progses.persent += 50.0 / 20;
 
                 }
                 catch (Exception ex)
@@ -85,18 +85,24 @@ namespace myClass
                 foreach (var g in filter)
                 {
                     Product i = new Product();
-                    uint? id = Buyable.FirstOrDefault(x=>x.sku==g.ToString())?.id;
+                    uint? id = Buyable.FirstOrDefault(x => x.sku == g.ToString())?.id;
                     if (id == null) continue;
                     i.id = id;
-                    i.in_stock = true;
 
                     var prod = Datalist.FirstOrDefault(x => x.Id.ToString() == g.ToString());
-                    var t =prod.SalePrice2;
+                    var t = prod.SalePrice2;
+
+                    if (prod.Inventory <= 0) i.in_stock = false;
+                    else
+                    {
+                        i.in_stock = true;
+                    }
+
 
                     Console.WriteLine($"prodouct id : {id} sku : {g}  price : {t}  yer : {prod.Year} updated");
                     if (a == "b") i.stock_quantity = Convert.ToInt32(prod.Inventory);
-                    i.sale_price =     Convert.ToDecimal(t);
-                    i.regular_price =  Convert.ToDecimal(i.sale_price == null ? 0 : i.sale_price);
+                    i.sale_price = Convert.ToDecimal(t);
+                    i.regular_price = Convert.ToDecimal(i.sale_price == null ? 0 : i.sale_price);
                     finalset.Add(i);
                 }
 
@@ -115,7 +121,7 @@ namespace myClass
                 progses.persent += m;
                 await woc.UpdateRange(finalset);
                 progses.persent = 100;
-               
+
 
             }
             catch (Exception ex)
