@@ -90,6 +90,8 @@ namespace myClass
                     i.id = id;
 
                     var prod = Datalist.FirstOrDefault(x => x.Id.ToString() == g.ToString());
+
+
                     var t = prod.SalePrice2;
 
                     if (prod.Inventory <= 0) i.in_stock = false;
@@ -98,11 +100,17 @@ namespace myClass
                         i.in_stock = true;
                     }
 
-
                     Console.WriteLine($"prodouct id : {id} sku : {g}  price : {t}  yer : {prod.Year} updated");
+                    /*
                     if (a == "b") i.stock_quantity = Convert.ToInt32(prod.Inventory);
+                    else */ i.stock_quantity = 0;
+
+                    i.backorders = "no";
+
                     i.sale_price = Convert.ToDecimal(t);
+
                     i.regular_price = Convert.ToDecimal(i.sale_price == null ? 0 : i.sale_price);
+
                     finalset.Add(i);
                 }
 
