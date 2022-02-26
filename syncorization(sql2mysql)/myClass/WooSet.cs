@@ -94,16 +94,41 @@ namespace myClass
 
                     var t = prod.SalePrice2;
 
-                    if (prod.Inventory <= 0) i.in_stock = false;
+                    /* (prod.Inventory <= 0) { i.in_stock = false; }
                     else
                     {
                         i.in_stock = true;
-                    }
+                    }*/
 
                     Console.WriteLine($"prodouct id : {id} sku : {g}  price : {t}  yer : {prod.Year} updated");
-                    /*
-                    if (a == "b") i.stock_quantity = Convert.ToInt32(prod.Inventory);
-                    else */ i.stock_quantity = 0;
+
+
+                    if (a == "b")
+                    {
+                        if (prod.Inventory <= 0)
+                        {
+                            t = 0;
+                            prod.Inventory = 0;
+                        }
+
+                        i.stock_quantity = Convert.ToInt32(prod.Inventory);
+                        i.manage_stock = true;
+                    }
+                    else
+                    {
+                        //i.stock_quantity = null
+
+                        if (prod.Inventory <= 0)
+                        {
+                            i.in_stock = false;
+                            t = 0;
+                        }
+                        else
+                        {
+                            i.in_stock = true;
+                        }
+                        i.manage_stock = false;
+                    }
 
                     i.backorders = "no";
 
